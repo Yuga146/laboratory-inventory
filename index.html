@@ -1,0 +1,520 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Laboratory Test Catalogue</title>
+
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f6f2ea;
+  --card: #fffdf9;
+  --ink: #29241f;
+  --muted: #746b60;
+  --line: #ded3c3;
+  --accent: #70542b;
+  --field: #fffdf9;
+  --success: #37654e;
+  --gold: #b48b4a;
+  --header1: #30271f;
+  --header2: #59452d;
+}
+
+body.dark {
+  color-scheme: dark;
+  --bg: #111315;
+  --card: #1d2022;
+  --ink: #f3eee4;
+  --muted: #bcb1a2;
+  --line: #403b34;
+  --accent: #a67e40;
+  --field: #252729;
+  --success: #a3d3af;
+  --gold: #d5ad68;
+  --header1: #101113;
+  --header2: #29241c;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-width: auto;
+  scrollbar-color: var(--gold) var(--bg);
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: Arial, sans-serif;
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 18px;
+}
+
+body::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+
+body::-webkit-scrollbar-thumb {
+  background: var(--gold);
+  border: 3px solid var(--bg);
+  border-radius: 12px;
+}
+
+header {
+  background: linear-gradient(
+    115deg,
+    var(--header1),
+    var(--header2)
+  );
+  border-bottom: 2px solid var(--gold);
+  color: white;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 27px;
+}
+
+header small {
+  color: #e9dac1;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+main {
+  max-width: 1200px;
+  margin: auto;
+  padding: 24px 20px;
+}
+
+input,
+select,
+textarea,
+button {
+  font: inherit;
+  border-radius: 9px;
+  padding: 13px;
+  border: 1px solid var(--line);
+}
+
+input,
+select,
+textarea {
+  background: var(--field);
+  color: var(--ink);
+  caret-color: var(--ink);
+}
+
+input::placeholder {
+  color: var(--muted);
+}
+
+button {
+  cursor: pointer;
+  background: var(--accent);
+  color: white;
+  border-color: var(--gold);
+}
+
+button.secondary,
+.header-actions button {
+  background: var(--card);
+  color: var(--ink);
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+#q {
+  width: 100%;
+  font-size: 16px;
+}
+
+.toolbar {
+  display: flex;
+  gap: 12px;
+  margin: 15px 0;
+  flex-wrap: wrap;
+}
+
+.toolbar select {
+  flex: 1;
+  min-width: 180px;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.count {
+  margin: 20px 0;
+  color: var(--muted);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 760px);
+  justify-content: center;
+  gap: 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--gold);
+  border-radius: 12px;
+  padding: 20px 24px;
+  width: 100%;
+}
+
+.card h3 {
+  font-size: 19px;
+  margin: 9px 0;
+  line-height: 1.4;
+}
+
+.meta {
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.code-line {
+  font-size: 14px;
+  margin: 8px 0;
+}
+
+.test-code-value {
+  font-weight: 800;
+}
+
+.price {
+  color: var(--success);
+  font-size: 18px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.specimen {
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 9px 0;
+}
+
+.unconfirmed {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.package-details {
+  margin-top: 15px;
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+
+.package-details summary {
+  cursor: pointer;
+  display: inline-block;
+  padding: 10px 15px;
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.included-tests {
+  line-height: 1.8;
+  padding-left: 24px;
+}
+
+.call-lab {
+  border: 1px solid var(--gold);
+  border-radius: 9px;
+  padding: 13px;
+  margin-top: 12px;
+}
+
+.lab-links {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+
+.lab-links a {
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 8px;
+  padding: 9px;
+  text-decoration: none;
+}
+
+.pager {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 30px 0;
+}
+
+.note {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+dialog {
+  width: min(550px, 95vw);
+  max-height: 90vh;
+  overflow: auto;
+  background: var(--card);
+  color: var(--ink);
+  border: 1px solid var(--gold);
+  border-radius: 14px;
+}
+
+dialog::backdrop {
+  background: #0009;
+}
+
+.formgrid {
+  display: grid;
+  gap: 12px;
+}
+
+.formgrid label {
+  display: grid;
+  gap: 6px;
+}
+
+.formgrid input,
+.formgrid select,
+.formgrid textarea {
+  width: 100%;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.error {
+  color: #d44242;
+}
+
+@media (max-width: 650px) {
+  header {
+    padding: 20px;
+  }
+
+  main {
+    padding: 15px;
+  }
+
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .toolbar select {
+    min-width: 100%;
+  }
+
+  .card {
+    padding: 17px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div>
+    <h1>Laboratory Test Catalogue</h1>
+    <small>
+      Premier Integrated Labs ·
+      Price & Service Catalogue V3.01
+    </small>
+  </div>
+
+  <div class="header-actions">
+    <button id="theme">Dark theme</button>
+    <button id="add">+ Add new test</button>
+  </div>
+</header>
+
+<main>
+
+  <input
+    id="q"
+    type="search"
+    placeholder="Search test name, code, or package contents..."
+  >
+
+  <div class="toolbar">
+
+    <select id="section">
+      <option value="">All categories</option>
+    </select>
+
+    <select id="limit">
+      <option value="24">24 tests per view</option>
+      <option value="48">48 tests per view</option>
+      <option value="100">100 tests per view</option>
+      <option value="all">Show all tests</option>
+    </select>
+
+    <button id="clear">Clear</button>
+
+  </div>
+
+  <div class="actions">
+    <button id="export" class="secondary">
+      Export added tests
+    </button>
+
+    <button id="import" class="secondary">
+      Import added tests
+    </button>
+
+    <input
+      id="importfile"
+      type="file"
+      accept=".json,application/json"
+      hidden
+    >
+  </div>
+
+  <div id="count" class="count"></div>
+
+  <section id="cards" class="grid"></section>
+
+  <div id="pager" class="pager">
+    <button id="prev">Previous</button>
+    <span id="status"></span>
+    <button id="next">Next</button>
+  </div>
+
+  <p class="note">
+    Laboratory catalogue information must be
+    verified against the official source.
+    Missing specimen or fasting details
+    should be confirmed with the laboratory.
+  </p>
+
+</main>
+
+<dialog id="addDialog">
+
+  <form id="addForm">
+
+    <h2>Add New Laboratory Test</h2>
+
+    <p class="note">
+      Enter only information confirmed
+      by the laboratory.
+    </p>
+
+    <div class="formgrid">
+
+      <label>
+        Test name *
+        <input name="name" required>
+      </label>
+
+      <label>
+        Test code *
+        <input name="code" required>
+      </label>
+
+      <label>
+        Price (RM) *
+        <input
+          name="price"
+          type="number"
+          min="0"
+          step="0.01"
+          required
+        >
+      </label>
+
+      <label>
+        Category *
+        <select name="section" required>
+          <option value="">Select category</option>
+        </select>
+      </label>
+
+      <label>
+        Specimen type and quantity
+        <input name="specimen">
+      </label>
+
+      <label>
+        Collection instructions
+        <input name="collection">
+      </label>
+
+      <label>
+        Included tests (one per line)
+        <textarea
+          name="components"
+          rows="5"
+        ></textarea>
+      </label>
+
+    </div>
+
+    <p id="formError" class="error"></p>
+
+    <div class="dialog-actions">
+      <button
+        type="button"
+        id="cancel"
+        class="secondary"
+      >
+        Cancel
+      </button>
+
+      <button type="submit">
+        Save Test
+      </button>
+    </div>
+
+  </form>
+
+</dialog>
+
+<script src="catalogue-data.js"></script>
+<script src="app.js"></script>
+
+</body>
+</html>
